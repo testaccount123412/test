@@ -5,6 +5,12 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
+        stage('Git') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    userRemoteConfigs: [[url: 'https://github.com/testaccount123412/test.git']]])
+            }
+        }
         stage('Check') {
             steps {
                  dependencyCheck additionalArguments: ''' 
