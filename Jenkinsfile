@@ -5,19 +5,6 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-        stage('Git') {
-            steps {
-                checkout([$class: 'GitSCM',
-                    branches: [[name: 'refs/tags/v8.1.0']],
-                    userRemoteConfigs: [[url: 'https://github.com/WebGoat/WebGoat.git']]])
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'chmod a+x /var/jenkins_home/workspace/$JOB_NAME/mvnw'
-                sh './mvnw clean install -DskipTests'
-            }
-        }
         stage('Check') {
             steps {
                  dependencyCheck additionalArguments: ''' 
