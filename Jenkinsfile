@@ -1,23 +1,33 @@
-/* Requires the Docker Pipeline plugin  a*/
 pipeline {
     agent any
+
     options {
         skipStagesAfterUnstable()
     }
     stages {
+        stage('Git') {
+            steps {
+                checkout([$class: 'GitSCM',
+                    branches: [[name: 'refs/tags/v8.1.0']],
+                    userRemoteConfigs: [[url: 'https://github.com/WebGoat/WebGoat.git']]])
+            }
+        }
         stage('Build') {
             steps {
-                echo 'Building'
+                sh 'chmod a+x /var/jenkins_home/workspace/DemoWebGoat/mvnw'
+                sh './mvnw clean install -DskipTests'
             }
         }
-        stage('Test') {
+        stage('Check') {
             steps {
-                echo 'Testing'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying'
+                 dependencyCheck additionalArguments: ''' 
+                    -o "./" 
+                    -s "./"
+                    -f "ALL" 
+                    --prettyPrint''', odcInstallation: 'SCAChecker'
+                    
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                
             }
         }
     }
