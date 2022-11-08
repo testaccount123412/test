@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'chmod a+x /var/jenkins_home/workspace/DemoWebGoat/mvnw'
+                sh 'chmod a+x /var/jenkins_home/workspace/$JOB_NAME/mvnw'
                 sh './mvnw clean install -DskipTests'
             }
         }
