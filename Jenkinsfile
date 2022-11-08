@@ -8,7 +8,8 @@ pipeline {
         stage('Git') {
             steps {
                 checkout([$class: 'GitSCM',
-                    userRemoteConfigs: [[url: 'https://github.com/testaccount123412/test.git']]])
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[url: 'https://github.com/WebGoat/WebGoat.git']]])
             }
         }
         stage('Check') {
