@@ -154,7 +154,8 @@
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.11.0",
     "webpack-merge": "^4.2.2",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+	"pdf-viewer": "^0.8.1"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
